@@ -8,14 +8,19 @@ def query_books_by_author(author_name):
 
 def list_books_in_library(library_name):
     print(f"\nBooks in library: {library_name}")
-    books = Book.objects.filter(library__name=library_name)
-    for book in books:
-        print(f"- {book.title} (Author: {book.author.name})")
+    try:
+        library = Library.objects.get(name=library_name)  # Explicit use
+        books = library.books.all()  # Explicit use (requires related_name='books' in Book model)
+        for book in books:
+            print(f"- {book.title} (Author: {book.author.name})")
+    except Library.DoesNotExist:
+        print("Library not found.")
 
 def get_librarian_for_library(library_name):
     print(f"\nLibrarian for library: {library_name}")
     try:
-        librarian = Librarian.objects.get(library__name=library_name)
+        library = Librarian.objects.get(library__name=library_name)
+        librarian = library.librarian
         print(f"Librarian: {librarian.name}")
     except Librarian.DoesNotExist:
         print("No librarian assigned to this library.")
