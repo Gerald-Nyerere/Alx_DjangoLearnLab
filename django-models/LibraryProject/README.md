@@ -1,0 +1,1 @@
+This is a basic Django project created for learning purposes under the ALX Django Learn Lab. It includes the default setup and configuration to get started with Django.
