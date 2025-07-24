@@ -11,6 +11,14 @@ class Book(models.Model):
     def __str__(self):
         return self.title
     
+    class Meta:
+        permissions = [
+            ("can_view_book", "Can view book"),
+            ("can_create_book", "Can create book"),
+            ("can_edit_book", "Can edit book"),
+            ("can_delete_book", "Can delete book"),
+        ]
+    
 class CustomUser(AbstractUser):
     date_of_birth = models.DateField(null=True, blank=True)
     profile_photo = models.ImageField(null=True, blank=True)
