@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 from .models import Book
+from .forms import ExampleForm
+
 # Create your views here.
 @permission_required('bookshelf.can_create', raise_exception=True)
 def create_book(request):
