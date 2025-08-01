@@ -16,10 +16,3 @@ class BookViewSet(viewsets.ModelViewSet):
     serializer_class = BookSerializer
 
 
-class MyAPIView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        # Only authenticated users can access this view
-        return Response({'message': 'Hello, authenticated user!'})
