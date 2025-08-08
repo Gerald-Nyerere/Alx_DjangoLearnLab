@@ -10,7 +10,7 @@ urlpatterns = [
     # Get a book by ID (Detail View)
     path('books/<int:id>/', CustomBookDetailView.as_view(), name='book-detail'),
     # Update a book by ID
-    path('books/<int:id>/update/', CustomBookUpdateView.as_view(), name='book-update'),
+    path('books/update/', CustomBookUpdateView.as_view(), name='book-update'),
     # Delete a book by ID
-    path('books/<int:id>/update/', CustomBookDeleteView.as_view(), name='book-delete'),
+    path('books/delete/', CustomBookDeleteView.as_view(), name='book-delete'),
 ]
