@@ -13,8 +13,8 @@ class CustomBookListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated] 
 
     filter_backends = [filters.OrderingFilter]
-    search_fields = ['title', 'author__name']
-    ordering_fields = ['title', 'author__name'] 
+    search_fields = [filters.SearchFilter]
+    ordering_fields = [filters.OrderingFilter] 
 
 class CustomBookDetailView(generics.CreateAPIView):
     queryset = Book.objects.all()
