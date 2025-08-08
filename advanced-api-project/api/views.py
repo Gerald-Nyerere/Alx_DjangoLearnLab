@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, filters
 from .models import Book
 from rest_framework.exceptions import NotFound
 from .serializers import BookSerializer
@@ -10,6 +10,10 @@ class CustomBookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated] 
+
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'author__name']
+    ordering_fields = ['title', 'author__name'] 
 
 class CustomBookDetailView(generics.CreateAPIView):
     queryset = Book.objects.all()
