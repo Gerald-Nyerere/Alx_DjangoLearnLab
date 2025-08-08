@@ -11,10 +11,11 @@ class CustomBookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated] 
-
-    filter_backends = [filters.OrderingFilter]
-    search_fields = [filters.SearchFilter]
-    ordering_fields = [filters.OrderingFilter] 
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    
+    filterset_fields = ['author', 'publication_year']
+    search_fields = ['title', 'author__name']
+    ordering_fields = ['title', 'author__name'] 
 
 class CustomBookDetailView(generics.CreateAPIView):
     queryset = Book.objects.all()
