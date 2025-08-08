@@ -20,10 +20,12 @@ class BookSerializer(serializers.ModelSerializer):
 
 # Serializer for the Author model
 # This includes a nested relationship to show books by the author
-class AutorSerializer(serializers.ModelSerializer):#
+class AuthorSerializer(serializers.ModelSerializer):
     # Display books as nested objects under each author
     books = BookSerializer(many=True, read_only=True)
     
     class Meta:
         model = Author
         fields = ['name']
+
+       
