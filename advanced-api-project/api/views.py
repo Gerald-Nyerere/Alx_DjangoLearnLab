@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, filters
+from django_filters import rest_framework
 from .models import Book
 from rest_framework.exceptions import NotFound
 from .serializers import BookSerializer
