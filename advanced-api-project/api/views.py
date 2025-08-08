@@ -12,7 +12,7 @@ class CustomBookListView(generics.ListAPIView):
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated] 
 
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.OrderingFilter]
     search_fields = ['title', 'author__name']
     ordering_fields = ['title', 'author__name'] 
 
