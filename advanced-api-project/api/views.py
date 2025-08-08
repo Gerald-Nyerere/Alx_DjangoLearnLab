@@ -3,7 +3,7 @@ from rest_framework import generics
 from .models import Book
 from rest_framework.exceptions import NotFound
 from .serializers import BookSerializer
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 
 # Create your views here.
 class CustomBookListView(generics.ListAPIView):
@@ -20,16 +20,16 @@ class CustomBookDetailView(generics.CreateAPIView):
 class CustomBookCreateView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 class CustomBookUpdateView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     lookup_field = 'id' 
 
 class CustomBookDeleteView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     lookup_field = 'id' 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
