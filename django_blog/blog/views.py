@@ -35,7 +35,6 @@ def profile(request):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
-    fields = ['title', 'content']
     template_name = 'blog/post_form.html'
     success_url = reverse_lazy('home') 
 
@@ -48,7 +47,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
-    fields = ['title', 'content']
     template_name = 'blog/post_form.html'
     success_url = reverse_lazy('home')
     
@@ -82,4 +80,4 @@ class PostListView(ListView):
     model = Post
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
-    ordering = [-id] 
+    ordering = ['-id'] 
