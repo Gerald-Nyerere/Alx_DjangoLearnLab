@@ -2,37 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}My Django Blog{% endblock %}</title>
+    <title>{% block title %}My Blog{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav>
-        <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            
+    <header>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
             {% if user.is_authenticated %}
-                <li><a href="{% url 'profile' %}">Profile</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <a href="{% url 'post-create' %}">New Post</a>
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'logout' %}">Logout</a>
             {% else %}
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
             {% endif %}
-        </ul>
-    </nav>
-
-    <hr>
-
-    <!-- Main Content -->
-    <div class="content">
-        {% block content %}
-        {% endblock %}
-    </div>
-
-    <hr>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 My Django Blog</p>
-    </footer>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 </body>
 </html>

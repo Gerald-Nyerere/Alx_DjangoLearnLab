@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserChangeForm
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, PostForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post
@@ -34,6 +34,7 @@ def profile(request):
 #CRUD operation view
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
+    form_class = PostForm
     fields = ['title', 'content']
     template_name = 'blog/post_form.html'
     success_url = reverse_lazy('home') 
@@ -46,9 +47,11 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
+    form_class = PostForm
     fields = ['title', 'content']
     template_name = 'blog/post_form.html'
-    success_url = reverse_lazy('home') 
+    success_url = reverse_lazy('home')
+    
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -79,3 +82,4 @@ class PostListView(ListView):
     model = Post
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
+    ordering = [-id] 
