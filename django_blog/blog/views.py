@@ -44,10 +44,17 @@ def search_posts(request):
     return render(request, 'blog/search_results.html', {'results': results, 'query': query})
 
 
-def posts_by_tag(request, tag_slug):
-    tag = get_object_or_404(Tag, slug=tag_slug)
-    posts = Post.objects.filter(tags__in=[tag])
-    return render(request, 'blog/posts_by_tag.html', {'posts': posts, 'tag': tag})
+class CommentCreateView(CreateView):
+    model = Comment
+    fields = ['author_name', 'content']
+    template_name = 'blog/comment_form.html'
+
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('post-detail', kwargs={'pk': self.kwargs['pk']})
 
 #CRUD operation view
 class PostCreateView(LoginRequiredMixin, CreateView):
