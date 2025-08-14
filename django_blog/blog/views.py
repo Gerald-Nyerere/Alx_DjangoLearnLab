@@ -1,3 +1,5 @@
+from django.db.models import Q
+from taggit.models import Tag
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -30,6 +32,22 @@ def profile(request):
         form = UserChangeForm(instance=request.user)
     return render(request, 'blog/profile.html', {'form': form})
 
+def search_posts(request):
+    query = request.GET.get('q')
+    results = []
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(tags__name__icontains=query)
+        ).distinct()
+    return render(request, 'blog/search_results.html', {'results': results, 'query': query})
+
+
+def posts_by_tag(request, tag_slug):
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    posts = Post.objects.filter(tags__in=[tag])
+    return render(request, 'blog/posts_by_tag.html', {'posts': posts, 'tag': tag})
 
 #CRUD operation view
 class PostCreateView(LoginRequiredMixin, CreateView):

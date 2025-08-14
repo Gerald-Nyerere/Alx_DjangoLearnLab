@@ -9,6 +9,9 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+        widgets = {
+            'tags': forms.TextInput(attrs={'placeholder': 'Add tags separated by commas'}),
+        }
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
