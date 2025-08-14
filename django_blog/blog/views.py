@@ -84,7 +84,6 @@ class PostListView(ListView):
 
 
 #comment view
-@login_required
 def add_comment(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.method == "POST":
@@ -97,9 +96,7 @@ def add_comment(request, post_id):
             return redirect('post-detail', pk=post.pk)
     else:
         form = CommentForm()
-    return render(request, 'blog/comment_form.html', {'form': form})
-
-
+    return redirect('post-detail', pk=post.pk)
 
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
