@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 # Create your models here.
 class User(AbstractUser):
     email = models.EmailField(unique=True, max_length=255)
-    username = models.CharField(unique=False, max_length=100)
+    username = models.CharField(unique=True, max_length=100)
 
      # ... additional fields and methods as required ...
     bio = models.TextField(unique=True, max_length=255)
