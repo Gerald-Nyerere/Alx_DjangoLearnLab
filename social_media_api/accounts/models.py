@@ -26,7 +26,7 @@ class User(AbstractUser):
     username = models.CharField(unique=False, max_length=100)
 
      # ... additional fields and methods as required ...
-    bio = models.CharField(unique=True, max_length=255)
+    bio = models.TextField(unique=True, max_length=255)
     profile_picture = models.ImageField()
     followers = models.ManyToManyField('self',symmetrical=False, related_name='following', blank=True,)
 
