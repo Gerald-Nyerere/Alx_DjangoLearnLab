@@ -5,7 +5,7 @@ from django.conf import settings
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(unique=True, max_length=100)
-    content = models.CharField(unique=True, max_length=255)
+    content = models.TextField(unique=True, max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True,)
     
@@ -20,4 +20,4 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True,)
     
     def __str__(self):
-        return self.title
+        return self.content
