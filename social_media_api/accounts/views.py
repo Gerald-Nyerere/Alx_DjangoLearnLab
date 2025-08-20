@@ -1,13 +1,15 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
+from rest_framework import status, permissions
+from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
-from .serializers import UserRegistrationSerializer
+from .serializers import UserRegistrationSerializer, UserSerializer
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class RegisterView(generics.CreateAPIView):
+class UserRegistrationView(generics.CreateAPIView):
     serializer_class = UserRegistrationSerializer
 
     def create(self, request, *args, **kwargs):
@@ -16,7 +18,7 @@ class RegisterView(generics.CreateAPIView):
         token = Token.objects.get(user=user)
         return Response({'user': response.data, 'token': token.key}, status=status.HTTP_201_CREATED)
 
-class LoginView(generics.GenericAPIView):
+class LoginView(APIView):
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -25,3 +27,17 @@ class LoginView(generics.GenericAPIView):
             token, created = Token.objects.get_or_create(user=user)
             return Response({'token': token.key})
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+
+class ProfileView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
+    def put(self, request):
+        serializer = UserSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
