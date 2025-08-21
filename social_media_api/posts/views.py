@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
@@ -30,7 +30,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class FeedView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
         following_users = request.user.following.all()
         posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
