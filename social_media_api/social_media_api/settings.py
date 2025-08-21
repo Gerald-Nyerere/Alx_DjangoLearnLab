@@ -33,10 +33,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
-# Static & media
-STATIC_ROOT = BASE_DIR / "staticfiles"
-MEDIA_ROOT = BASE_DIR / "media"
-
 # Application definition
 
 INSTALLED_APPS = [
