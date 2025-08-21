@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from .serializers import UserRegistrationSerializer, UserSerializer
 from django.contrib.auth import get_user_model
+from .models import User as CustomUser
 
 User = get_user_model()
 
@@ -75,7 +76,7 @@ class UnfollowUserView(APIView):
 class UserListView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
-    queryset = User.objects.all() 
+    queryset = CustomUser.objects.all() 
 
     def get(self, request, *args, **kwargs):
         users = self.get_queryset()
