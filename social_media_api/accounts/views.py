@@ -43,7 +43,7 @@ class ProfileView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    
+
 class FollowUserView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -71,3 +71,13 @@ class UnfollowUserView(APIView):
 
         request.user.following.remove(target_user)
         return Response({"message": f"You have unfollowed {target_user.username}"}, status=status.HTTP_200_OK)
+
+class UserListView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSerializer
+    queryset = User.objects.all() 
+
+    def get(self, request, *args, **kwargs):
+        users = self.get_queryset()
+        serializer = self.get_serializer(users, many=True)
+        return Response(serializer.data)
