@@ -30,7 +30,6 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class FeedView(APIView):
-    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         following_users = request.user.following.all()
