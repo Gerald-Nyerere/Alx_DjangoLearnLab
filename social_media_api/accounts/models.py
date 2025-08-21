@@ -9,7 +9,7 @@ class User(AbstractUser):
      # ... additional fields and methods as required ...
     bio = models.TextField(unique=True, max_length=255)
     profile_picture = models.ImageField()
-    followers = models.ManyToManyField('self',symmetrical=False, related_name='following', blank=True,)
+    following = models.ManyToManyField('self',symmetrical=False, related_name='followers', blank=True,)
     
     def __str__(self):
         return self.username
