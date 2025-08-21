@@ -28,6 +28,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     pagination_class = CustomPagination
 
+
 class FeedView(APIView):
     permission_classes = [IsAuthenticated]
 
