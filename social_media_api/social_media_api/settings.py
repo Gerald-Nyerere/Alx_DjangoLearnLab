@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,6 +33,7 @@ SECURE_SSL_REDIRECT = True
 DEBUG = False
 
 ALLOWED_HOSTS = []
+PORT = int(os.environ.get('PORT', 8000))  # default to 8000 if not set
 
 # Application definition
 
