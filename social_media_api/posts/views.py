@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework import generics, status
 from rest_framework import viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
@@ -44,7 +45,7 @@ class LikePostView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
-        post = get_object_or_404(Post, id=pk)
+        post = generics.get_object_or_404(Post, id=pk)
         like, created = Like.objects.get_or_create(post=post, user=request.user)
         if created:
             if post.author != request.user:
@@ -61,7 +62,7 @@ class UnlikePostView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
-        post = get_object_or_404(Post, id=pk)
+        post = generics.get_object_or_404(Post, id=pk)
         like = Like.objects.filter(post=post, user=request.user).first()
         if like:
             like.delete()
