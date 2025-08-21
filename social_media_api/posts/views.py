@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
-from notifications.views import create_notification
+from notifications.views import Notification
 from .filters import PostFilter
 from .models import Post, Comment, Like
 from .serializers import CommentSerializer, PostSerializer
@@ -49,7 +49,7 @@ class LikePostView(APIView):
         like, created = Like.objects.get_or_create(user=request.user, post=post)
         if created:
             if post.author != request.user:
-                create_notification(
+                Notification.objects.create(
                     recipient=post.author,
                     actor=request.user,
                     verb="liked your post",
