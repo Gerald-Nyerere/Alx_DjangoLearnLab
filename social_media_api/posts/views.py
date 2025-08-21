@@ -30,7 +30,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class FeedView(APIView):
-
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         following_users = request.user.following.all()
         posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
